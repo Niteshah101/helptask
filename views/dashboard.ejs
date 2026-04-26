@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head><title>Dashboard</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<nav>
+  <h2>Helpers</h2>
+  <div><a href="/">Home</a><a href="/tasks/new">New Task</a><a href="/stats">Stats</a><a href="/logout">Logout</a></div>
+</nav>
+<main class="container">
+  <h1>Owner Dashboard</h1>
+  <p>Welcome, <%= user.name %>. These are your tasks and current volunteers.</p>
+
+  <% if (tasks.length === 0) { %><p>You have not created any tasks yet.</p><% } %>
+
+  <% tasks.forEach(task => { %>
+    <div class="card wide">
+      <h2><%= task.title %></h2>
+      <p><%= task.description %></p>
+      <p><strong>Location:</strong> <%= task.location %></p>
+      <p><strong>Status:</strong> <%= task.active ? 'Active' : 'Closed' %></p>
+
+      <% if (task.active) { %>
+        <form action="/tasks/<%= task._id %>/close" method="POST">
+          <button class="danger" type="submit">Close Task</button>
+        </form>
+      <% } %>
+
+      <h3>Volunteers</h3>
+      <% if (!task.volunteers || task.volunteers.length === 0) { %>
+        <p>No current volunteers.</p>
+      <% } else { %>
+        <ul>
+          <% task.volunteers.forEach(volunteer => { %>
+            <li>
+              <%= volunteer.identifier %>
+              <form action="/dismiss/<%= task._id %>/<%= encodeURIComponent(volunteer.identifier) %>" method="POST" class="inline">
+                <button class="danger" type="submit">Dismiss</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+  <% }) %>
+</main>
+</body>
+</html>

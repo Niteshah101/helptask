@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head><title>My Subscriptions</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+<nav>
+  <h2>Helpers</h2>
+  <div>
+    <a href="/">Home</a><a href="/stats">Stats</a>
+    <% if (user) { %><a href="/dashboard">Dashboard</a><a href="/logout">Logout</a><% } else { %><a href="/login">Login</a><% } %>
+  </div>
+</nav>
+<main class="container">
+  <h1>My Subscriptions</h1>
+  <p>Enter the same email or unique identifier you used when volunteering.</p>
+  <% if (error) { %><p class="error"><%= error %></p><% } %>
+  <form action="/my-subscriptions" method="POST" class="form-box">
+    <input type="text" name="identifier" placeholder="Email or unique identifier" value="<%= identifier || '' %>" required>
+    <button type="submit">Look Up</button>
+  </form>
+
+  <% if (subscriptions && subscriptions.length === 0) { %><p>No current subscriptions found.</p><% } %>
+  <% if (subscriptions && subscriptions.length > 0) { %>
+    <h2>Current subscribed tasks</h2>
+    <% subscriptions.forEach(item => { %>
+      <div class="card wide">
+        <h3><%= item.task.title %></h3>
+        <p><%= item.task.description %></p>
+        <p><strong>Location:</strong> <%= item.task.location %></p>
+        <p><strong>Status:</strong> <%= item.status %></p>
+      </div>
+    <% }) %>
+  <% } %>
+</main>
+</body>
+</html>
