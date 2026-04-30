@@ -11,7 +11,7 @@
 </nav>
 <main class="container">
   <h1>My Subscriptions</h1>
-  <p>Enter the same email or unique identifier you used when volunteering.</p>
+  <p>Enter the email to see your subscriptions</p>
   <% if (error) { %><p class="error"><%= error %></p><% } %>
   <form action="/my-subscriptions" method="POST" class="form-box">
     <input type="text" name="identifier" placeholder="Email or unique identifier" value="<%= identifier || '' %>" required>
