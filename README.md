@@ -1,45 +1,48 @@
-# Helpers System
+## Overview
 
-Node.js + Express + MongoDB Atlas volunteering system.
+The Helpers System is a web-based application designed to connect task owners with volunteers in a simple and efficient way. Authenticated users can create and manage tasks, while volunteers can sign up for tasks without creating an account by using their email address as a unique identifier. The system ensures that all task subscriptions reflect the current state of the database, allowing task owners to manage volunteers dynamically.
 
-## Patterns implemented
+## Core Functionality
 
-- MVC: routes, controllers, models, views separated.
-- Observer: `observers/taskObserver.js` receives task/volunteer events.
-- Singleton: `config/db.js` keeps one MongoDB client/database instance.
+The application allows users with accounts to create and manage tasks, including viewing volunteers and dismissing them when necessary. Volunteers can browse available tasks, subscribe using their email, and later retrieve their subscribed tasks using the same email. Additionally, the system provides a statistics view that displays the number of volunteers associated with each active task in real time.
 
-## Render environment variables
+## Architecture and Design Patterns
 
-Add these in Render Dashboard -> Your Web Service -> Environment:
+### MVC (Model-View-Controller)
 
-```env
-MONGO_URI=mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/?retryWrites=true&w=majority
-DB_NAME=helpersDB
-SESSION_SECRET=replace-with-long-random-secret
-NODE_ENV=production
-```
+The application follows the MVC architecture to ensure separation of concerns:
 
-MongoDB Atlas Network Access should allow Render. For testing, add `0.0.0.0/0`.
+* **Model** handles data structure and database interactions.
+* **View** is responsible for rendering the user interface using EJS templates.
+* **Controller** manages application logic and handles user requests.
 
-## Render settings
+### Singleton Pattern
 
-- Build Command: `npm install`
-- Start Command: `npm start`
+A Singleton pattern is implemented for database access to ensure that only one instance of the database connection exists throughout the application lifecycle. This improves efficiency and prevents redundant connections.
 
-## Local setup
+### Observer Pattern
 
-```bash
-cp .env.example .env
-npm install
-npm run dev
-```
+The Observer pattern is used to manage changes in task subscriptions. When a volunteer subscribes to or is removed from a task, the system updates relevant components (such as task statistics and views) to reflect the latest data, ensuring consistency across the application.
 
-## Main routes
+## Technologies Used
 
-- `/` active tasks and volunteer forms
-- `/register` owner account registration
-- `/login` owner login
-- `/dashboard` owner dashboard with volunteers and dismiss buttons
-- `/tasks/new` create task
-- `/my-subscriptions` volunteer lookup by identifier
-- `/stats` current volunteer counts for active tasks
+* **Node.js** – Server-side runtime environment
+* **Express.js** – Web application framework
+* **MongoDB Atlas** – Cloud-based NoSQL database
+* **EJS (Embedded JavaScript Templates)** – Dynamic front-end rendering
+* **Express Session & Connect-Mongo** – Session management and storage
+
+## Key Features
+
+* Task creation and management by authenticated users
+* Volunteer signup using email (no account required)
+* Subscription tracking and lookup by email
+* Real-time task statistics for active tasks
+* Secure session handling and persistent data storage
+* Clean separation of logic using MVC architecture
+* Efficient database handling using Singleton pattern
+* Dynamic updates using Observer pattern
+
+## Purpose
+
+This project demonstrates the implementation of real-world web application concepts, focusing on system design, architecture patterns, and efficient data handling in a full-stack environment.
