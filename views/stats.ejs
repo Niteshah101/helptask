@@ -2,7 +2,7 @@
 <html>
 <head><title>Stats</title><link rel="stylesheet" href="/style.css"></head>
 <body>
-<nav><h2>Helpers</h2><div><a href="/">Home</a><a href="/my-subscriptions">My Subscriptions</a><% if (user) { %><a href="/dashboard">Dashboard</a><% } else { %><a href="/login">Login</a><% } %></div></nav>
+<nav><h2>TaskConnect</h2><div><a href="/">Home</a><a href="/my-subscriptions">My Subscriptions</a><% if (user) { %><a href="/dashboard">Dashboard</a><% } else { %><a href="/login">Login</a><% } %></div></nav>
 <main class="container">
   <h1>Active Task Volunteer Statistics</h1>
   <% if (stats.length === 0) { %><p>No active tasks.</p><% } %>
